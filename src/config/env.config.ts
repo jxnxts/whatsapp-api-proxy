@@ -127,6 +127,7 @@ export interface Env {
   SESSION_SECRET: string;
   S3?: Bucket;
   WA_VERSION: string;
+  PROXY_URL?: string;
 }
 
 export type Key = keyof Env;
@@ -166,6 +167,7 @@ export class ConfigService {
       SERVER: {
         PORT: Number.parseInt(process.env?.SERVER_PORT || '8084'),
       },
+      PROXY_URL: process.env?.PROXY_URL,
       STORE: {
         CLEANING_INTERVAL: Number.isInteger(process.env?.STORE_CLEANING_TERMINAL)
           ? Number.parseInt(process.env.STORE_CLEANING_TERMINAL)

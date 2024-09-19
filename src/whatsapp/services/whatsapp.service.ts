@@ -103,6 +103,7 @@ import {
   SendReactionDto,
   SendTextDto,
 } from '../dto/sendMessage.dto';
+import { HttpsProxyAgent } from 'https-proxy-agent'; 
 import { isArray, isBase64, isNotEmpty, isURL } from 'class-validator';
 import {
   ArchiveChatDto,
@@ -511,7 +512,7 @@ export class WAStartupService {
 
     const { EXPIRATION_TIME } = this.configService.get<QrCode>('QRCODE');
     const CONNECTION_TIMEOUT = this.configService.get<number>('CONNECTION_TIMEOUT');
-
+    const proxyUrl = this.configService.get<string>('PROXY_URL');
     const socketConfig: UserFacingSocketConfig = {
       auth: {
         creds: this.authState.state.creds,
@@ -523,6 +524,7 @@ export class WAStartupService {
       logger: P({ level: 'silent' }) as any,
       printQRInTerminal: false,
       browser,
+      agent: proxyUrl ? new HttpsProxyAgent(proxyUrl) : undefined,
       version,
       connectTimeoutMs: CONNECTION_TIMEOUT * 1000,
       qrTimeout: EXPIRATION_TIME * 1000,

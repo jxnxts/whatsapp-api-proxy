@@ -5,7 +5,9 @@ services:
     image: postgres:latest
     container_name: postgres_server
     environment:
-      POSTGRES_PASSWORD: pass
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
